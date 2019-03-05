@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,7 @@ namespace Roulette
             {
                 value = System.Int32.Parse(userinput);
             }
-            Console.WriteLine(value);
+            
             return value;
         }
 
@@ -310,14 +310,15 @@ namespace Roulette
         {
             int betnumber = 0;
             int selection;
-            int[][] bets = new int[10][];
-            string[] betNames = new string[10];
+            int[][] bets = new int[9][];
+            string[] betNames = new string[9];
+
 
             Console.WriteLine("\n\tWelcome to Roulette!\n" +
                 "You will enter 10 bets. Follow the prompts to enter your bet choices. Only enter the number choice of your selection." +
                 "\nPress enter to continue...");
             Console.ReadKey();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 9; i++)
             {
                 Console.WriteLine($"\nNumber of bets made: {betnumber}");
                 Console.WriteLine("Please select a bet:" +
@@ -329,8 +330,7 @@ namespace Roulette
                     "\n6.  Columns\t - choose between the first, second, or third columns" +
                     "\n7.  Street\t - choose a row of numbers" +
                     "\n8.  6 Numbers\t - choose a set of 2 rows" +
-                    "\n9.  Split\t - choose a set of 2 numbers" +
-                    "\n10. Corner\t - choose a set of 4 numbers");
+                    "\n9.  Corner\t - choose a set of 4 numbers");
 
                 selection = GetNum();
 
@@ -381,18 +381,30 @@ namespace Roulette
                         betNames[i] = "Corners Bet";
                         betnumber++;
                         break;
-                    case 10:
-                        bets[i] = MakeColumnsBet();
-                        betNames[i] = "Columns Bet";
-                        betnumber++;
-                        break;
+                    
                     default:
                         break;
                 }
+
                 
             }
-            
-            
+
+            Random random = new Random();
+            int ballVal = random.Next(38);
+
+            Console.WriteLine($"The winning number is {ballVal}!");
+
+            for (int j = 0; j < bets.Length; j++)
+            {
+                if (bets[j].Contains<int>(ballVal))
+                {
+                    Console.WriteLine($"Your {betNames[j]} won!");
+                }
+                else
+                {
+                    Console.WriteLine($"Sorry, your {betNames[j]} lost.");
+                }
+            }
         }
 
         static void Main(string[] args)
